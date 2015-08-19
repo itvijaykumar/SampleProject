@@ -1,0 +1,71 @@
+﻿@model mvcForumapp.Models.userModel
+@{
+    ViewBag.Title = "Sign In";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    
+    <br />                             
+    <div class="clear" id="login_form">
+        <div class="left" id="member_login">
+            <h2 class="maintitle">
+                Sign In</h2>
+            <div class="generic_bar">
+            </div>
+            <div id="regular_signin">
+                <a id="_regularsignin"></a>
+                <h3 class="bar">
+                    Enter your sign in name and password</h3>
+                <ul>
+                    <li style="float: left; margin-left: 200px;" class="field">
+                        <label>
+                            Username:</label>
+                        @Html.TextBoxFor(u => u.Email, new { @class = "input_text", autocomplete = "off" })
+                        <span class="input_error">
+                            @Html.ValidationMessageFor(u => u.Email)
+                        </span></li>
+                    <li style="float: left; margin-left: 200px;" class="field">
+                        <label>
+                            Password:</label>
+                        @Html.PasswordFor(u => u.password, new { @class = "input_text" })
+                        <span class="input_error">
+                            @Html.ValidationMessageFor(u => u.password)</span> </li>
+                </ul>
+            </div>
+            <div style="float: left; margin-left: 230px;">
+                <input type="submit" value="Log In" class="input_submit" />
+                &nbsp;
+                @Html.ActionLink("Cancel", "Index", new { Controller = "Technology" }, new { @class = "input_submit" })
+            </div>
+            <br />
+            <br />
+            <hr style="-moz-border-bottom-colors: none; -moz-border-left-colors: none; -moz-border-right-colors: none;
+                -moz-border-top-colors: none; border-color: #EBEBEB; border-image: none; border-style: solid;
+                border-width: 1px 0 0; clear: both; display: block; width: 105%;" />
+            <div class="input_error" style="float: left; margin-left: 200px;">
+                @Html.ValidationSummary()
+            </div>
+        </div>
+        <div class="right general_box" id="guest_register">
+            <!-- TWITTER LOG IN -->
+            <h3 class="bar">
+                Not a member?</h3>
+            <p>
+                If you aren't a member yet, it only takes a couple of minutes to register! Members
+                get these benefits and more!
+                <br />
+                <br />
+            </p>
+            <ul class="bullets">
+                <li>Start new topics and reply to others</li>
+            </ul>
+            <p>
+            </p>
+            <br />
+            <p style="text-align: center">
+                <a href="../Register/Register">Register Now</a>
+            </p>
+        </div>
+    </div>
+}

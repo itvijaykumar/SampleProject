@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="@Url.Content("~/Scripts/tinymce/jquery.tinymce.js")" type="text/javascript"></script>
+</head>
+<body>
+    <div id="branding">
+    </div>
+    <div>
+        @if (Session["UserName"] != null)
+        {
+            <div class="logged_in" id="user_navigation" runat="server">
+                <a title="Your Profile" href="">@*<img height="50" width="50" class="photo" src='<%= Url.Action( "GetPhoto", "image", new { photoId = Session["UserName"] } ) %>' />*@
+                    <img alt="" src="@Url.Action("ShowImage", "displayImage")" height="50" width="50" class="photo" />
+                </a>
+                <div id="user_info">
+                    <p>
+                        <span class="hide">Signed in as </span><a href="" title="Your Profile" class="ipbmenu">
+                            <span class="ipbmenu">@Html.Label("Name", Session["UserName"].ToString()) </span>
+                        </a>
+                        <img alt="&gt;" src="http://www.gimptalk.com/public/style_images/master/opts_arrow.png" />
+                    </p>
+                    <ul class="boxShadow" id="user_link_menucontent" style="display: none; position: absolute;
+                        z-index: 9999;">
+                    </ul>
+                    <ul id="user_other">
+                        <li><a href="../Logout/Logout">Logout</a> </li>
+                    </ul>
+                </div>
+                <br />
+            </div>
+@*<strong>@Html.Encode(User.Identity.Name)</strong>
+            @Html.ActionLink("Log Out", "Logout", "User");*@
+        }
+        else
+        {
+            <div class="not_logged_in" id="user_navigation" runat="server">
+                <a class="rounded" id="A1" title="Sign In »" href="../Login/Login"><span class="left">
+                    Sign In »</span> <span class="services right"></span>
+                    <br />
+                </a>
+                <br />
+                <span class="links">New user? <a id="register_link" title="Register Now!" href="../Register/Register">
+                    Register Now!</a>&nbsp; </span>
+            </div>
+        }
+    </div>
+    <div id="primary_nav">
+        <ul>
+            <li class="left active" id="nav_discussion" runat="server"><a title="Go to Forums"
+                href="@Url.Action("Index", "Technology")">Forums</a></li>@*<li class="left" id="nav_members"
+                    runat="server"><a
+                    title="Go to Member List" href="@Url.Action("Members", "Home")">Members</a></li>*@
+        </ul>
+    </div>
+    @RenderBody()
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

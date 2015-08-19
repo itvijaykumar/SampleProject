@@ -1,0 +1,34 @@
+﻿#help_topics
+{
+    border: 1px solid #d5dde5;
+}
+
+#help_topics li
+{
+    background-image: url(http://www.gimptalk.com/public/style_images/master/help.png);
+    background-repeat: no-repeat;
+    background-position: 9px 12px;
+    padding: 10px 32px;
+    margin-bottom: 2px;
+}
+
+#help_topics li h3
+{
+    padding: 2px 0 0 0;
+}
+
+.help_doc
+{
+    padding: 10px;
+    border: 1px solid #d5dde5;
+}
+#help_topics .help_doc ul, #help_topics .help_doc ol
+{
+    padding: 8px 0;
+}
+
+#help_topics .help_doc li
+{
+    background: none;
+    padding: 2px;
+}

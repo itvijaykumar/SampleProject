@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="newForumDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="newForumDBModelStoreContainer">
+          <EntitySet Name="tblQuestions" EntityType="newForumDBModel.Store.tblQuestions" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblReplies" EntityType="newForumDBModel.Store.tblReplies" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblTechnology" EntityType="newForumDBModel.Store.tblTechnology" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblUser" EntityType="newForumDBModel.Store.tblUser" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="tblQuestions">
+          <Key>
+            <PropertyRef Name="QuestionID" />
+          </Key>
+          <Property Name="QuestionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionTitle" Type="varchar(max)" Nullable="false" />
+          <Property Name="QuestionDesc" Type="varchar(max)" Nullable="false" />
+          <Property Name="DatePosted" Type="datetime" Nullable="false" />
+          <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="TechID" Type="int" Nullable="false" />
+          <Property Name="viewCount" Type="int" Nullable="false" />
+          <Property Name="ReplyCount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblReplies">
+          <Key>
+            <PropertyRef Name="ReplyID" />
+          </Key>
+          <Property Name="ReplyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionID" Type="int" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="TechID" Type="int" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="ReplyMsg" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="tblTechnology">
+          <Key>
+            <PropertyRef Name="TechID" />
+          </Key>
+          <Property Name="TechID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TechName" Type="varchar(max)" Nullable="false" />
+          <Property Name="TechDesc" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="EmailID" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DateJoined" Type="datetime" Nullable="false" />
+          <Property Name="Password" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Photo" Type="image" />
+        </EntityType>
+        <Function Name="displayallQuesTechID1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TechID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="displayResults" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="QuestionID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="selectTechQuestions1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="newForumDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="newForumDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblQuestions" EntityType="newForumDBModel.tblQuestion" />
+          <EntitySet Name="tblReplies" EntityType="newForumDBModel.tblReply" />
+          <EntitySet Name="tblTechnologies" EntityType="newForumDBModel.tblTechnology" />
+          <EntitySet Name="tblUsers" EntityType="newForumDBModel.tblUser" />
+          <FunctionImport Name="TechResult" ReturnType="Collection(newForumDBModel.TechResult_Result)" />
+          <FunctionImport Name="QuestionList" ReturnType="Collection(newForumDBModel.QuestionList_Result)">
+            <Parameter Name="TechID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Questionwithreplys" ReturnType="Collection(newForumDBModel.Questionwithreplys_Result)">
+            <Parameter Name="QuestionID" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="tblQuestion">
+          <Key>
+            <PropertyRef Name="QuestionID" />
+          </Key>
+          <Property Name="QuestionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionTitle" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="QuestionDesc" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="DatePosted" Type="DateTime" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="TechID" Type="Int32" Nullable="false" />
+          <Property Name="viewCount" Type="Int32" Nullable="false" />
+          <Property Name="ReplyCount" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblReply">
+          <Key>
+            <PropertyRef Name="ReplyID" />
+          </Key>
+          <Property Name="ReplyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionID" Type="Int32" />
+          <Property Name="date" Type="DateTime" />
+          <Property Name="TechID" Type="Int32" />
+          <Property Name="UserName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="ReplyMsg" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tblTechnology">
+          <Key>
+            <PropertyRef Name="TechID" />
+          </Key>
+          <Property Name="TechID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TechName" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="TechDesc" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="EmailID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="DateJoined" Type="DateTime" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <ComplexType Name="TechResult_Result">
+          <Property Type="Int32" Name="TechID" Nullable="true" />
+          <Property Type="Int32" Name="QuestionID" Nullable="true" />
+          <Property Type="String" Name="QuestionTitle" Nullable="true" />
+          <Property Type="DateTime" Name="DatePosted" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Username" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TechName" Nullable="false" />
+          <Property Type="String" Name="TechDesc" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="TechnID" Nullable="false" />
+          <Property Type="Int32" Name="Totalposts" Nullable="true" />
+          <Property Type="Int32" Name="ReplyCount" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="QuestionList_Result">
+          <Property Type="Int32" Name="QuestionID" Nullable="false" />
+          <Property Type="String" Name="QuestionTitle" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="DatePosted" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
+          <Property Type="String" Name="RepliedName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="viewCount" Nullable="false" />
+          <Property Type="Int32" Name="ReplyCount" Nullable="false" />
+          <Property Type="String" Name="ReplyMsg" Nullable="true" />
+          <Property Type="Int32" Name="TechID" Nullable="false" />
+          <Property Type="String" Name="TechName" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="Questionwithreplys_Result">
+          <Property Type="Int32" Name="QuestionID" Nullable="false" />
+          <Property Type="String" Name="QuestionDesc" Nullable="false" />
+          <Property Type="Int32" Name="TechID" Nullable="false" />
+          <Property Type="String" Name="quesaskedby" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="QuestionTitle" Nullable="false" />
+          <Property Type="DateTime" Name="DatePosted" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="ReplyID" Nullable="true" />
+          <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ReplyMsg" Nullable="true" />
+          <Property Type="String" Name="ReplyUser" Nullable="true" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="newForumDBModelStoreContainer" CdmEntityContainer="newForumDBEntities">
+          <EntitySetMapping Name="tblQuestions"><EntityTypeMapping TypeName="newForumDBModel.tblQuestion"><MappingFragment StoreEntitySet="tblQuestions">
+            <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+            <ScalarProperty Name="QuestionTitle" ColumnName="QuestionTitle" />
+            <ScalarProperty Name="QuestionDesc" ColumnName="QuestionDesc" />
+            <ScalarProperty Name="DatePosted" ColumnName="DatePosted" />
+            <ScalarProperty Name="UserName" ColumnName="UserName" />
+            <ScalarProperty Name="TechID" ColumnName="TechID" />
+            <ScalarProperty Name="viewCount" ColumnName="viewCount" />
+            <ScalarProperty Name="ReplyCount" ColumnName="ReplyCount" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="tblReplies"><EntityTypeMapping TypeName="newForumDBModel.tblReply"><MappingFragment StoreEntitySet="tblReplies">
+            <ScalarProperty Name="ReplyID" ColumnName="ReplyID" />
+            <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+            <ScalarProperty Name="date" ColumnName="date" />
+            <ScalarProperty Name="TechID" ColumnName="TechID" />
+            <ScalarProperty Name="UserName" ColumnName="UserName" />
+            <ScalarProperty Name="ReplyMsg" ColumnName="ReplyMsg" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="tblTechnologies"><EntityTypeMapping TypeName="newForumDBModel.tblTechnology"><MappingFragment StoreEntitySet="tblTechnology">
+            <ScalarProperty Name="TechID" ColumnName="TechID" />
+            <ScalarProperty Name="TechName" ColumnName="TechName" />
+            <ScalarProperty Name="TechDesc" ColumnName="TechDesc" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="tblUsers"><EntityTypeMapping TypeName="newForumDBModel.tblUser"><MappingFragment StoreEntitySet="tblUser">
+            <ScalarProperty Name="UserName" ColumnName="UserName" />
+            <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+            <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+            <ScalarProperty Name="DateJoined" ColumnName="DateJoined" />
+            <ScalarProperty Name="Password" ColumnName="Password" />
+            <ScalarProperty Name="Photo" ColumnName="Photo" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="TechResult" FunctionName="newForumDBModel.Store.selectTechQuestions1">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="newForumDBModel.TechResult_Result">
+                <ScalarProperty Name="TechID" ColumnName="TechID" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="QuestionTitle" ColumnName="QuestionTitle" />
+                <ScalarProperty Name="DatePosted" ColumnName="DatePosted" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="TechName" ColumnName="TechName" />
+                <ScalarProperty Name="TechDesc" ColumnName="TechDesc" />
+                <ScalarProperty Name="TechnID" ColumnName="TechnID" />
+                <ScalarProperty Name="Totalposts" ColumnName="Totalposts" />
+                <ScalarProperty Name="ReplyCount" ColumnName="ReplyCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="QuestionList" FunctionName="newForumDBModel.Store.displayallQuesTechID1">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="newForumDBModel.QuestionList_Result">
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="QuestionTitle" ColumnName="QuestionTitle" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="DatePosted" ColumnName="DatePosted" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="RepliedName" ColumnName="RepliedName" />
+                <ScalarProperty Name="viewCount" ColumnName="viewCount" />
+                <ScalarProperty Name="ReplyCount" ColumnName="ReplyCount" />
+                <ScalarProperty Name="ReplyMsg" ColumnName="ReplyMsg" />
+                <ScalarProperty Name="TechID" ColumnName="TechID" />
+                <ScalarProperty Name="TechName" ColumnName="TechName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Questionwithreplys" FunctionName="newForumDBModel.Store.displayResults">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="newForumDBModel.Questionwithreplys_Result">
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="QuestionDesc" ColumnName="QuestionDesc" />
+                <ScalarProperty Name="TechID" ColumnName="TechID" />
+                <ScalarProperty Name="quesaskedby" ColumnName="quesaskedby" />
+                <ScalarProperty Name="QuestionTitle" ColumnName="QuestionTitle" />
+                <ScalarProperty Name="DatePosted" ColumnName="DatePosted" />
+                <ScalarProperty Name="ReplyID" ColumnName="ReplyID" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="ReplyMsg" ColumnName="ReplyMsg" />
+                <ScalarProperty Name="ReplyUser" ColumnName="ReplyUser" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="mvcforums">
+        <EntityTypeShape EntityType="newForumDBModel.tblQuestion" Width="1.5" PointX="0.75" PointY="0.75" Height="2.2496956380208331" IsExpanded="true" />
+        <EntityTypeShape EntityType="newForumDBModel.tblReply" Width="1.5" PointX="2.75" PointY="0.75" Height="1.9210009765624996" IsExpanded="true" />
+        <EntityTypeShape EntityType="newForumDBModel.tblTechnology" Width="1.5" PointX="0.75" PointY="3.75" Height="1.4279589843749996" IsExpanded="true" />
+        <EntityTypeShape EntityType="newForumDBModel.tblUser" Width="1.5" PointX="2.75" PointY="3.75" Height="1.9210009765624996" IsExpanded="true" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

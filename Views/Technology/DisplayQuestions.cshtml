@@ -1,0 +1,228 @@
+﻿@model IEnumerable<mvcForumapp.QuestionList_Result>
+@{
+    ViewBag.Title = "Details";
+}
+<style type="text/css">
+    .disabled
+    {
+        /* Text and background colour, medium red on light yellow */
+        float: right;
+        margin-right: 20px;
+        background: #999;
+        background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#dadada), to(#f3f3f3));
+        border-top: 1px solid #c5c5c5;
+        border-right: 1px solid #cecece;
+        border-bottom: 1px solid #d9d9d9;
+        border-left: 1px solid #cecece;
+        color: #8f8f8f;
+        box-shadow: none;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        cursor: not-allowed;
+        text-shadow: 0 -1px 1px #ebebeb;
+    }
+    .active
+    {
+        box-shadow: none;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        cursor: allowed;
+    }
+</style>
+<br />
+<br />
+<div style="float: left; margin-left: 20px;">
+    @Html.ActionLink("Back", "Index", "Technology")
+</div>
+<div id='ipbwrapper'>
+    <ul class="comRigt">
+        <li>
+            <br />
+            <img alt="Start New Topic" src="http://www.gimptalk.com/public/style_images/master/page_white_add.png" />
+            @if (Session["UserName"] != null)
+            {
+                int techID = Convert.ToInt16(@Request.QueryString["TechID"]);
+                if (Model.Count() == 0)
+                {
+                @Html.ActionLink("Start New Topic", "PostQuestion", "Question", new { @class = "active", onclick = "javascript:return true;", TechID = techID }, null)
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {   
+                @Html.ActionLink("Start New Topic", "PostQuestion", "Question", new { @class = "active", onclick = "javascript:return true;", TechID = item.TechID }, null)
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                int techID = Convert.ToInt16(@Request.QueryString["TechID"]);
+                if (Model.Count() == 0)
+                {
+                @Html.ActionLink("Start New Topic", "PostQuestion", "Home", new {title = "Please login to post Questions", @class = "disabled", onclick = "javascript:return false;", TechID = techID })
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                @Html.ActionLink("Start New Topic", "PostQuestion", "Home", new {title = "Please login to post Questions", TechID = item.TechID, @class = "disabled", onclick = "javascript:return false;" })
+                        break;
+                    }
+                }
+            }
+        </li>
+    </ul>
+    <br />
+    @if (Model.Count() != 0)
+    {
+        <div class="category_block block_wrap">
+            <table id="forum_table" summary="Topics In This Forum &quot;GimpTalk News and Updates&quot;"
+                class="ipb_table topic_list">
+                <div class="maintitle">
+                    <span class="main_forum_title">
+                        @foreach (var item in Model)
+                        {
+                            string strTopic = "A forum where you can post questions regarding " + item.TechName;
+                            @Html.Label("Topic", strTopic)
+                            break;
+                        }
+                    </span>
+                </div>
+                <tbody>
+                    <tr class="header">
+                        <th class="col_f_icon" scope="col">
+                            &nbsp;
+                        </th>
+                        <th class="col_f_topic" scope="col">
+                            Topic
+                        </th>
+                        <th class="col_f_starter short" scope="col">
+                            Started By
+                        </th>
+                        <th class="col_f_views stats" scope="col">
+                            Stats
+                        </th>
+                        <th class="col_f_post" scope="col">
+                            Last Post Info
+                        </th>
+                    </tr>
+                    <tr id="trow_49752" class="row1">
+                        <td class="short altrow">
+                        </td>
+                        <td class="__topic __tid49752" id="anonymous_element_3">
+                            @foreach (var item in Model)
+                            {
+                                <br />
+                                string QuestionTitle = item.QuestionTitle;
+                                @Html.ActionLink(QuestionTitle, "displayQuestionwithAnswers", "Question_Answer", new { QuestionID = item.QuestionID }, null)
+                                <br />
+                                <br />
+                            }
+                        </td>
+                        <td class="short altrow">
+                            @foreach (var item in Model)
+                            {
+                                <br />
+                                string QuestionTitle = item.UserName;
+                                @Html.ActionLink(QuestionTitle, "Details", "Home", new { Username = item.UserName }, null)
+                                <br />
+                                <br />
+                            }
+                        </td>
+                        <td class="stats">
+                            <ul>
+                                <li>
+                                    @foreach (var item in Model)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.ReplyCount)
+                                        @Html.Label("  ");
+                                        @Html.Label("Replies")
+                                        <br />
+                                        @Html.DisplayFor(modelItem => item.viewCount)
+                                        @Html.Label("  ");
+                                        @Html.Label("Views")
+                                        <br />
+                                        <br />
+                                    }
+                                </li>
+                            </ul>
+                        </td>
+                        <td class="altrow">
+                            @foreach (var item in Model)
+                            {
+                                if (item.date != null)
+                                {
+                                    DateTime dt = Convert.ToDateTime(item.date);
+                                    string strDate = dt.ToString("dd MMMM yyyy - hh:mm tt");
+                                @Html.Label(strDate)
+                                }
+                                else
+                                {
+                                    DateTime dt = Convert.ToDateTime(item.DatePosted);
+                                    string strDate = dt.ToString("dd MMMM yyyy - hh:mm tt");
+                                @Html.Label(strDate)
+                                }
+                                <br />
+                                @Html.Label("By : ")
+                                @Html.Label("  ")
+                                if (item.RepliedName != null)
+                                {
+                                    string User = item.RepliedName;
+                                @Html.ActionLink(User, "Details", "Home", new { Username = item.RepliedName }, null)
+                                }
+                                else
+                                {
+                                    string User = item.UserName;
+                                @Html.ActionLink(User, "Details", "Home", new { Username = item.UserName }, null)
+                                }
+                                <br />
+                                <br />
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="category_block block_wrap">
+            <table id="forum_table1" summary="Topics In This Forum &quot;GimpTalk News and Updates&quot;"
+                class="ipb_table topic_list">
+                <div class="maintitle">
+                    <span style="font-size:larger; margin-left:450px;">No topics available</span>
+                </div>
+            </table>
+        </div>
+    }
+    @if (Model.Count() != 0)
+    {
+        <ul class="comRigt">
+            <li>
+                <br />
+                <img alt="Start New Topic" src="http://www.gimptalk.com/public/style_images/master/page_white_add.png" />
+                @if (Session["UserName"] != null)
+                {
+
+                    foreach (var item in Model)
+                    {   
+                    @Html.ActionLink("Start New Topic", "PostQuestion", "Question", new { @class = "active", onclick = "javascript:return true;", TechID = item.TechID }, null)
+                        break;
+                    }
+
+                }
+                else
+                {
+
+                    foreach (var item in Model)
+                    {
+                    @Html.ActionLink("Start New Topic", "PostQuestion", "Home", new {title = "Please login to post Questions", TechID = item.TechID, @class = "disabled", onclick = "javascript:return false;" })
+                        break;
+                    }
+
+                }
+            </li>
+        </ul>
+    }
+</div>

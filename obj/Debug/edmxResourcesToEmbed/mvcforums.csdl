@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="newForumDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="newForumDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tblQuestions" EntityType="newForumDBModel.tblQuestion" />
+    <EntitySet Name="tblReplies" EntityType="newForumDBModel.tblReply" />
+    <EntitySet Name="tblTechnologies" EntityType="newForumDBModel.tblTechnology" />
+    <EntitySet Name="tblUsers" EntityType="newForumDBModel.tblUser" />
+    <FunctionImport Name="TechResult" ReturnType="Collection(newForumDBModel.TechResult_Result)" />
+    <FunctionImport Name="QuestionList" ReturnType="Collection(newForumDBModel.QuestionList_Result)">
+      <Parameter Name="TechID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Questionwithreplys" ReturnType="Collection(newForumDBModel.Questionwithreplys_Result)">
+      <Parameter Name="QuestionID" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="tblQuestion">
+    <Key>
+      <PropertyRef Name="QuestionID" />
+    </Key>
+    <Property Name="QuestionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="QuestionTitle" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="QuestionDesc" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="DatePosted" Type="DateTime" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="TechID" Type="Int32" Nullable="false" />
+    <Property Name="viewCount" Type="Int32" Nullable="false" />
+    <Property Name="ReplyCount" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblReply">
+    <Key>
+      <PropertyRef Name="ReplyID" />
+    </Key>
+    <Property Name="ReplyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="QuestionID" Type="Int32" />
+    <Property Name="date" Type="DateTime" />
+    <Property Name="TechID" Type="Int32" />
+    <Property Name="UserName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="ReplyMsg" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tblTechnology">
+    <Key>
+      <PropertyRef Name="TechID" />
+    </Key>
+    <Property Name="TechID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TechName" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="TechDesc" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tblUser">
+    <Key>
+      <PropertyRef Name="UserName" />
+    </Key>
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="EmailID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="DateJoined" Type="DateTime" Nullable="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <ComplexType Name="TechResult_Result">
+    <Property Type="Int32" Name="TechID" Nullable="true" />
+    <Property Type="Int32" Name="QuestionID" Nullable="true" />
+    <Property Type="String" Name="QuestionTitle" Nullable="true" />
+    <Property Type="DateTime" Name="DatePosted" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Username" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="TechName" Nullable="false" />
+    <Property Type="String" Name="TechDesc" Nullable="true" MaxLength="100" />
+    <Property Type="Int32" Name="TechnID" Nullable="false" />
+    <Property Type="Int32" Name="Totalposts" Nullable="true" />
+    <Property Type="Int32" Name="ReplyCount" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="QuestionList_Result">
+    <Property Type="Int32" Name="QuestionID" Nullable="false" />
+    <Property Type="String" Name="QuestionTitle" Nullable="false" />
+    <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="DatePosted" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
+    <Property Type="String" Name="RepliedName" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="viewCount" Nullable="false" />
+    <Property Type="Int32" Name="ReplyCount" Nullable="false" />
+    <Property Type="String" Name="ReplyMsg" Nullable="true" />
+    <Property Type="Int32" Name="TechID" Nullable="false" />
+    <Property Type="String" Name="TechName" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Questionwithreplys_Result">
+    <Property Type="Int32" Name="QuestionID" Nullable="false" />
+    <Property Type="String" Name="QuestionDesc" Nullable="false" />
+    <Property Type="Int32" Name="TechID" Nullable="false" />
+    <Property Type="String" Name="quesaskedby" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="QuestionTitle" Nullable="false" />
+    <Property Type="DateTime" Name="DatePosted" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="ReplyID" Nullable="true" />
+    <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
+    <Property Type="String" Name="ReplyMsg" Nullable="true" />
+    <Property Type="String" Name="ReplyUser" Nullable="true" MaxLength="50" />
+  </ComplexType>
+</Schema>

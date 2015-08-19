@@ -1,0 +1,129 @@
+﻿@model IEnumerable<mvcForumapp.TechResult_Result>
+@{
+    ViewBag.Title = "Main";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="secondary_nav">
+    <ul class="left" id="breadcrumb">
+        <li class="first"><a href="">MVC-Forum Community</a></li>
+    </ul>
+</div>
+<div class="clear" id="content">
+    <a id="j_content"></a>
+    <h2 class="hide">
+        Board Index</h2>
+    <div class="clearfix" id="board_index">
+        <div class="no_sidebar clearfix" id="categories">
+            <!-- CATS AND FORUMS -->
+            <div class="category_block block_wrap">
+                <h3 class="maintitle" id="category_47">
+                    <a title="View category" href="Index">Technology related questions</a></h3>
+                <div class="table_wrap">
+                    <table summary="Forums within the category 'GimpTalk'" class="ipb_table">
+                        <tbody>
+                            <tr class="header">
+                                <th class="col_c_icon" scope="col">
+                                    &nbsp;
+                                </th>
+                                <th class="col_c_forum" scope="col">
+                                    Forum
+                                </th>
+                                <th class="col_c_stats stats" scope="col">
+                                    Stats
+                                </th>
+                                <th class="col_c_post" scope="col">
+                                    Last Post Info
+                                </th>
+                            </tr>
+                            <tr class="row1">
+                                <td class="altrow">
+                                </td>
+                                <td>
+                                    @foreach (var item in Model)
+                                    {
+                                        string techname = item.TechName;
+                                        @Html.ActionLink(techname, "DisplayQuestions", "Technology", new { TechID = item.TechnID }, null)
+                                        <br />
+                                        <br />
+                                        @Html.DisplayFor(modelItem => item.TechDesc)
+                                        <br />
+                                        <br />
+                                    }
+                                </td>
+                                <td class="altrow stats">
+                                    @foreach (var item in Model)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.Totalposts)
+                                        @Html.Label("  ");
+                                        @Html.Label("Topics")
+                                        <br />
+                                                         if (item.ReplyCount != null)
+                                                         {
+                                        @Html.DisplayFor(modelItem => item.ReplyCount)
+                                        @Html.Label("  ");
+                                        @Html.Label("Replies")
+                                        <br />
+                                        <br />
+                                                         }
+                                                         else
+                                                         {
+                                        @Html.DisplayFor(modelItem => item.ReplyCount)
+                                        @Html.Label("  ");
+                                        @Html.Label("0 Replies")
+                                        <br />
+                                        <br />
+                                                         }
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var item in Model)
+                                    {
+                                        if (item.DatePosted != null)
+                                        {
+                                            DateTime dt = Convert.ToDateTime(item.DatePosted);
+                                            string strDate = dt.ToString("dd MMMM yyyy - hh:mm tt");
+                                        @Html.Label(strDate)
+                                        <br />
+                                        }
+                                        else
+                                        {
+                                        <br />
+                                        }
+                                        if (item.QuestionTitle != null)
+                                        {
+                                        @Html.Label("IN : ");
+                                        @Html.Label("  ");
+                                                         string QuestionTitle = item.QuestionTitle;
+                                        @Html.ActionLink(QuestionTitle, "displayIndividual", "Display", new { QuestionID = item.QuestionID }, null)
+                                        <br />
+                                        }
+                                        else
+                                        {
+                                        <br />
+                                        }
+                                        if (item.Username != null)
+                                        {
+                                        @Html.Label("By : ");
+                                        @Html.Label("  ");
+                                                         string User = item.Username;
+                                        @Html.ActionLink(User, "Details", "Home", new { Username = item.Username }, null)
+                                        <br />
+                                        <br />
+                                        }
+                                        else
+                                        {
+                                        @Html.ActionLink("Start New Topic", "PostQuestion", "Home", new { TechID = item.TechnID }, null)
+                                        <br />
+                                        <br />
+                                        }
+
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

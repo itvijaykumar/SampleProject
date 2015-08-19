@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="newForumDBModelStoreContainer" CdmEntityContainer="newForumDBEntities">
+    <EntitySetMapping Name="tblQuestions">
+      <EntityTypeMapping TypeName="newForumDBModel.tblQuestion">
+        <MappingFragment StoreEntitySet="tblQuestions">
+          <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+          <ScalarProperty Name="QuestionTitle" ColumnName="QuestionTitle" />
+          <ScalarProperty Name="QuestionDesc" ColumnName="QuestionDesc" />
+          <ScalarProperty Name="DatePosted" ColumnName="DatePosted" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="TechID" ColumnName="TechID" />
+          <ScalarProperty Name="viewCount" ColumnName="viewCount" />
+          <ScalarProperty Name="ReplyCount" ColumnName="ReplyCount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblReplies">
+      <EntityTypeMapping TypeName="newForumDBModel.tblReply">
+        <MappingFragment StoreEntitySet="tblReplies">
+          <ScalarProperty Name="ReplyID" ColumnName="ReplyID" />
+          <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="TechID" ColumnName="TechID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="ReplyMsg" ColumnName="ReplyMsg" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblTechnologies">
+      <EntityTypeMapping TypeName="newForumDBModel.tblTechnology">
+        <MappingFragment StoreEntitySet="tblTechnology">
+          <ScalarProperty Name="TechID" ColumnName="TechID" />
+          <ScalarProperty Name="TechName" ColumnName="TechName" />
+          <ScalarProperty Name="TechDesc" ColumnName="TechDesc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblUsers">
+      <EntityTypeMapping TypeName="newForumDBModel.tblUser">
+        <MappingFragment StoreEntitySet="tblUser">
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="DateJoined" ColumnName="DateJoined" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Photo" ColumnName="Photo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="TechResult" FunctionName="newForumDBModel.Store.selectTechQuestions1">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="newForumDBModel.TechResult_Result">
+          <ScalarProperty Name="TechID" ColumnName="TechID" />
+          <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+          <ScalarProperty Name="QuestionTitle" ColumnName="QuestionTitle" />
+          <ScalarProperty Name="DatePosted" ColumnName="DatePosted" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="TechName" ColumnName="TechName" />
+          <ScalarProperty Name="TechDesc" ColumnName="TechDesc" />
+          <ScalarProperty Name="TechnID" ColumnName="TechnID" />
+          <ScalarProperty Name="Totalposts" ColumnName="Totalposts" />
+          <ScalarProperty Name="ReplyCount" ColumnName="ReplyCount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="QuestionList" FunctionName="newForumDBModel.Store.displayallQuesTechID1">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="newForumDBModel.QuestionList_Result">
+          <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+          <ScalarProperty Name="QuestionTitle" ColumnName="QuestionTitle" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="DatePosted" ColumnName="DatePosted" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="RepliedName" ColumnName="RepliedName" />
+          <ScalarProperty Name="viewCount" ColumnName="viewCount" />
+          <ScalarProperty Name="ReplyCount" ColumnName="ReplyCount" />
+          <ScalarProperty Name="ReplyMsg" ColumnName="ReplyMsg" />
+          <ScalarProperty Name="TechID" ColumnName="TechID" />
+          <ScalarProperty Name="TechName" ColumnName="TechName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Questionwithreplys" FunctionName="newForumDBModel.Store.displayResults">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="newForumDBModel.Questionwithreplys_Result">
+          <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+          <ScalarProperty Name="QuestionDesc" ColumnName="QuestionDesc" />
+          <ScalarProperty Name="TechID" ColumnName="TechID" />
+          <ScalarProperty Name="quesaskedby" ColumnName="quesaskedby" />
+          <ScalarProperty Name="QuestionTitle" ColumnName="QuestionTitle" />
+          <ScalarProperty Name="DatePosted" ColumnName="DatePosted" />
+          <ScalarProperty Name="ReplyID" ColumnName="ReplyID" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="ReplyMsg" ColumnName="ReplyMsg" />
+          <ScalarProperty Name="ReplyUser" ColumnName="ReplyUser" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

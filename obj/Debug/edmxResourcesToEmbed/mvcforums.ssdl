@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="newForumDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="newForumDBModelStoreContainer">
+    <EntitySet Name="tblQuestions" EntityType="newForumDBModel.Store.tblQuestions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tblReplies" EntityType="newForumDBModel.Store.tblReplies" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tblTechnology" EntityType="newForumDBModel.Store.tblTechnology" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tblUser" EntityType="newForumDBModel.Store.tblUser" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="tblQuestions">
+    <Key>
+      <PropertyRef Name="QuestionID" />
+    </Key>
+    <Property Name="QuestionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="QuestionTitle" Type="varchar(max)" Nullable="false" />
+    <Property Name="QuestionDesc" Type="varchar(max)" Nullable="false" />
+    <Property Name="DatePosted" Type="datetime" Nullable="false" />
+    <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="TechID" Type="int" Nullable="false" />
+    <Property Name="viewCount" Type="int" Nullable="false" />
+    <Property Name="ReplyCount" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblReplies">
+    <Key>
+      <PropertyRef Name="ReplyID" />
+    </Key>
+    <Property Name="ReplyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="QuestionID" Type="int" />
+    <Property Name="date" Type="datetime" />
+    <Property Name="TechID" Type="int" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="ReplyMsg" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="tblTechnology">
+    <Key>
+      <PropertyRef Name="TechID" />
+    </Key>
+    <Property Name="TechID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TechName" Type="varchar(max)" Nullable="false" />
+    <Property Name="TechDesc" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="tblUser">
+    <Key>
+      <PropertyRef Name="UserName" />
+    </Key>
+    <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="EmailID" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="DateJoined" Type="datetime" Nullable="false" />
+    <Property Name="Password" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Photo" Type="image" />
+  </EntityType>
+  <Function Name="displayallQuesTechID1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TechID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="displayResults" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="QuestionID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="selectTechQuestions1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+</Schema>

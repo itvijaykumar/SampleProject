@@ -1,0 +1,231 @@
+﻿@model IEnumerable<mvcForumapp.Questionwithreplys_Result>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style type="text/css">
+    .disabled
+    {
+        /* Text and background colour, medium red on light yellow */
+        float: right;
+        margin-right: 20px;
+        background: #999;
+        background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#dadada), to(#f3f3f3));
+        border-top: 1px solid #c5c5c5;
+        border-right: 1px solid #cecece;
+        border-bottom: 1px solid #d9d9d9;
+        border-left: 1px solid #cecece;
+        color: #8f8f8f;
+        box-shadow: none;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        cursor: not-allowed;
+        text-shadow: 0 -1px 1px #ebebeb;
+    }
+    .active
+    {
+        box-shadow: none;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        cursor: allowed;
+    }
+</style>
+<br />
+<div style="float: left; margin-left: 20px;">
+    @foreach (var item in Model)
+    {
+        @Html.ActionLink("Back", "DisplayQuestions", "Technology", new { TechID = item.TechID }, null)
+        break;
+    }
+</div>
+<div class="topic_controls">
+    <br />
+    <ul class="comRigt" runat="server" id="lnkTopic">
+        <li>
+            <img alt="Add Reply" src="http://www.gimptalk.com/public/style_images/master/arrow_rotate_clockwise.png" />
+            @if (Session["UserName"] != null)
+            {
+
+                foreach (var item in Model)
+                {   
+                @Html.ActionLink("Add Reply", "PostReply", "Reply", new { @class = "active", onclick = "javascript:return true;", QuestionID = item.QuestionID, TechID = item.TechID }, null)
+                    break;
+                }
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                @Html.ActionLink("Add Reply", "PostReply", "Reply", new { title = "Please login to post replys", TechID = item.QuestionID, @class = "disabled", onclick = "javascript:return false;" })
+                    break;
+                }
+            }
+        </li>
+    </ul>
+    <br />
+    <h2 class="maintitle">
+        <span class="main_topic_title">
+            @foreach (var item in Model)
+            {
+                string strTopic = item.QuestionTitle;
+                @Html.Label("Topic", strTopic)
+                break;
+            }
+        </span>
+    </h2>
+    <br />
+    <div class="post_wrap">
+        <h3>
+            &nbsp; <span class="author vcard">
+                @foreach (var item in Model)
+                {
+                    string User = item.quesaskedby;
+                    @Html.ActionLink(User, "Details", "Home", new { Username = item.quesaskedby }, null)
+                    break;
+                }
+                @*<asp:linkbutton id="lnkUsername" runat="server" text='<%#Eval("UserName") %>' font-underline="false"></asp:linkbutton>*@
+            </span>
+        </h3>
+        <div class="authornew">
+            <ul>
+                <li class="avatar">
+                    @foreach (var item in Model)
+                    {
+                        <img alt="" src="@Url.Action("GetPhoto", "Question_Answer", new { QuestionID = item.QuestionID })" height="100" width="100" class="photo" />
+                        break;
+                    }
+                </li>
+            </ul>
+        </div>
+        <div class="postbody">
+            <p class="postnew">
+                @foreach (var item in Model)
+                {
+                    DateTime dt = Convert.ToDateTime(item.DatePosted);
+                    string strDate = dt.ToString("dd MMMM yyyy - hh:mm tt");
+                    @Html.Label(strDate)
+                    break;
+                }
+                @*<asp:label id="lblDateposted" text='<%#Eval("DatePosted") %>' font-underline="false"
+                    runat="server" cssclass="edit"></asp:label>*@
+            </p>
+            <br />
+            <br />
+            <div class="post entry-content ">
+                @*<asp:label id="Label1" text='<%#Eval("QuestionDesc") %>' font-underline="false" runat="server"
+                    cssclass="edit"></asp:label>*@
+                @foreach (var item in Model)
+                {
+                    @Html.Label(item.QuestionDesc)
+                    break;
+                }
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <ul style="background-color: #e4ebf3; text-align: right; background-image: url(http://www.gimptalk.com/public/style_images/master/gradient_bg.png);
+        background-repeat: repeat-x; background-position: 40%; font-size: 1em; text-align: right;
+        padding: 6px 10px 10px 6px; clear: both;">
+        <li>
+            <img alt="Add Reply" src="http://www.gimptalk.com/public/style_images/master/comment_add.png" />
+            @if (Session["UserName"] != null)
+            {
+                foreach (var item in Model)
+                {
+                @Html.ActionLink("Add Reply", "PostReply", "Reply", new { @class = "active", onclick = "javascript:return true;", QuestionID = item.QuestionID, TechID = item.TechID }, null)
+                    break;
+                }
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                @Html.ActionLink("Add Reply", "PostReply", "Reply", new { title = "Please login to post replys", @class = "disabled", onclick = "javascript:return false;", TechID = item.QuestionID })
+                    break;
+                }
+            }
+            @*<asp:linkbutton id="lnkpostReply" runat="server" onclick="lnkpostReply_Click" text="Reply"></asp:linkbutton>*@
+        </li>
+    </ul>
+</div>
+<br />
+<br />
+<div>
+    @foreach (var item in Model)
+    {
+        if (item.ReplyUser != null)
+        {
+        <div class="topic_controls">
+            <div class="post_wrap">
+                <h3>
+                    &nbsp;
+                    @if (item.ReplyUser != null)
+                    {
+                        <span class="author vcard">
+                            @Html.ActionLink(item.ReplyUser.ToString(), "Details", "Home", new { Username = item.ReplyUser },
+                     null)</span>
+                    }
+                    <br />
+                    @*<asp:linkbutton id="lnkUsername" runat="server" text='<%#Eval("UserName") %>' font-underline="false"></asp:linkbutton>*@
+                </h3>
+                <div class="authornew">
+                    <ul>
+                        <li class="avatar">
+                            @if (item.ReplyID != null)
+                            {
+                                <img alt="" src="@Url.Action("ReplyPhoto", "Question_Answer", new { QuestionID = item.ReplyID })"
+                    height="100" width="100" class="photo" />
+                            }
+                            <br />
+                        </li>
+                    </ul>
+                </div>
+                <div class="postbody">
+                    <p class="postnew">
+                        @if (item.date != null)
+                        {
+                            @Html.Label(item.date.Value.ToString("dd MMMM yyyy - hh:mm tt"))
+                        }
+                        <br />
+                        @*<asp:label id="lblDateposted" text='<%#Eval("DatePosted") %>' font-underline="false"
+                    runat="server" cssclass="edit"></asp:label>*@
+                    </p>
+                    <br />
+                    <br />
+                    <div class="post
+                    entry-content ">
+                        @if (item.ReplyMsg != null)
+                        {
+                            @Html.Label(item.ReplyMsg)
+                        }
+                        <br />
+                    </div>
+                    @if (item.ReplyID != null)
+                    {
+                        <ul style="background-color: #e4ebf3; text-align: right; background-image: url(http://www.gimptalk.com/public/style_images/master/gradient_bg.png);
+                            background-repeat: repeat-x; background-position: 40%; font-size: 1em; text-align: right;
+                            padding: 6px 10px 10px 6px; clear: both;">
+                            <li>
+                                <img alt="Add Reply" src="http://www.gimptalk.com/public/style_images/master/comment_add.png" />
+                                @*<asp:linkbutton id="lnkpostReply" runat="server" onclick="lnkpostReply_Click" text="Reply"></asp:linkbutton>*@
+                                @if (Session["UserName"] == null)
+                                {
+                                
+                                    @Html.ActionLink("Add Reply", "PostReply", "Reply", new { title = "Please login to post replys", @class = "disabled", onclick = "javascript:return false;", TechID = item.QuestionID })
+                                
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Add Reply", "PostReply", "Reply", new { @class = "active", onclick = "javascript:return true;", QuestionID = item.QuestionID, TechID = item.TechID }, null)
+                                }
+                            </li>
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+        }
+    }
+</div>
